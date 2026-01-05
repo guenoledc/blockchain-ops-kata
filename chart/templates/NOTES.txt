@@ -1,0 +1,29 @@
+1. Get the application URL by running these commands:
+{{- if contains "ClusterIP" .Values.service.type }}
+  export POD_NAME=$(kubectl get pods --namespace ns-interview -l "app.kubernetes.io/name={{ include "blockchain-ops.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace ns-interview $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace ns-interview port-forward $POD_NAME 8080:$CONTAINER_PORT
+{{- end }}
+
+Application Configuration:
+{{- range $key, $value := .Values.env }}
+  - {{ $key }}: {{ $value | default "[not set]" }}
+{{- end }}
+
+To override environment variables when installing the chart:
+
+  helm install blockchain-ops ./chart -n ns-interview \
+    --set env.NODE_URL="your-node-url" \
+    --set env.USER_ADDRESS="your-address" \
+    --set env.START_BLOCK="your-start-block" \
+    --set env.NB_BLOCKS="number-of-blocks"
+
+Or use a values file with your configuration:
+
+values.yaml:
+  env:
+    NODE_URL: "your-node-url"
+    USER_ADDRESS: "your-address"
+    START_BLOCK: "your-start-block"
+    NB_BLOCKS: "10"
