@@ -1,3 +1,6 @@
+image:
+  tag: main
+
 env:
   # Node URL for blockchain connection
   NODE_URL: "wss://cacib-saturn-test.francecentral.cloudapp.azure.com:9443/"

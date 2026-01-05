@@ -7,6 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+
+      - name: Set image tag from branch
+        run: |
+          TAG=$(echo "${GITHUB_REF_NAME}" | tr '/' '-')
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -14,7 +20,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: int128/kaniko-action@v1.7.0
         with:
-          tags: ghcr.io/guenoledc/blockchain-ops-kata/application:latest
+          tags: ghcr.io/guenoledc/blockchain-ops-kata/application:${TAG}
           context: app
           file: app/Dockerfile
           push: true
