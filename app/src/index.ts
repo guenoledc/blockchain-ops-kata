@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import * as viem from 'viem'; 
+import viem from 'viem'; 
 import express from 'express';
 
 
@@ -13,7 +13,7 @@ const transport = nodeUrl.startsWith("ws") ? viem.webSocket(nodeUrl) : viem.http
 const client = viem.createPublicClient({transport});
 let running = false;
 
-async function main() {
+function main() {
   if (!nbBlocks) throw new Error("NB_BLOCKS environment variable must be set to a positive integer.");
   if (!nodeUrl) throw new Error("NODE_URL environment variable must be set.");
 
@@ -42,7 +42,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', async (req, res) => {
-  const curentBlock = await client.getBlockNumber();
+  const curentBlock = client.getBlockNumber();
   const balance = await client.getBalance({address: userAddress as `0x${string}`});
   res.json({
     msg:'Ethereum Block Monitor is running. Check the console for output.',

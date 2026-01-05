@@ -15,22 +15,9 @@ Local installation of
 ## Activities
 
 1. connect to the kubernetes cluster using the provided kubeconfig file (`export KUBECONFIG=./interview-cluster.yaml`)
-2. compile the typescript project and fix the issues
-3. fix and build the docker image
-4. fix and execute the helm chart into the cluster
-5. verify that the application is running correctly by port-forwarding locally `curl http://localhost:8080/`
+2. review the code and explain the behaviour expected
+3. compile and run the project and fix the issues
+4. fix and build the docker image
+5. fix and execute the helm chart into the cluster
+6. verify that the application is running correctly by port-forwarding locally `curl http://localhost:8080/`
 
-
-## Helper commands 
-
-`cd app`
-- setup: `npm install`
-- local run: `npm run dev`
-- build: `npm run build`
-- local start the built app: `npm run start`
-- build docker image locally: `docker build .`
-
-`cd ..`
-- connect to the cluster: `export KUBECONFIG=./interview-cluster.yaml`
-- helm install: `helm install blockchain-ops ./chart -n ns-interview -f app.values.yaml`
-- curl command: `curl http://localhost:8080/`
